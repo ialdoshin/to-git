@@ -1,0 +1,64 @@
+@startuml
+title MCP 2025-11-25 — инициализация сессии
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST /mcp\ninitialize, id=1\nprotocolVersion=2025-11-25\ncapabilities={}
+note right of S2
+  Проверить:
+  - HTTP headers
+  - method allowlist
+  - protocol version
+  - capabilities policy
+end note
+
+alt Policy нарушена
+  S2 --> S1: 403 / JSON-RPC policy error
+else Policy разрешает запрос
+  S2 -> SOWA: POST /mcp\ninitialize, id=1
+  note right of SOWA
+    JSON Schema oneOf:
+    ветка InitializeRequest
+  end note
+
+  alt JSON Schema не пройдена
+    SOWA --> S2: 400 Bad Request
+    S2 --> S1: 400 Bad Request
+  else JSON Schema пройдена
+    SOWA -> S4: POST /mcp\ninitialize, id=1
+    S4 --> SOWA: 200 application/json\nInitializeResult, id=1\nMCP-Session-Id: session-123
+    SOWA --> S2: Ответ без преобразования
+    note left of S2
+      Проверить:
+      - id=1
+      - protocolVersion=2025-11-25
+      - только capability tools
+      - tools.listChanged=false
+      - формат Session ID
+    end note
+    S2 --> S1: Проверенный InitializeResult\nMCP-Session-Id: session-123
+  end
+end
+
+S1 -> S2: POST /mcp\nnotifications/initialized\nMCP-Protocol-Version\nMCP-Session-Id
+S2 -> SOWA: Разрешённый lifecycle-вызов
+note right of SOWA
+  JSON Schema oneOf:
+  ветка InitializedNotification
+  id отсутствует
+end note
+SOWA -> S4: POST /mcp\nnotifications/initialized
+S4 --> SOWA: 202 Accepted\nбез тела
+SOWA --> S2: 202 Accepted
+S2 --> S1: 202 Accepted
+
+note over S1,S4
+  Инициализация завершена.
+  Сервис 1 может отправлять tools/call.
+end note
+
+@enduml

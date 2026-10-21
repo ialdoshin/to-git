@@ -1,0 +1,74 @@
+@startuml
+title MCP 2025-11-25 — tools/call с SSE и progress
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST /mcp\ntools/call, id=18\n_meta.progressToken=p18
+note right of S2
+  Проверить:
+  - method и tool allowlist
+  - права
+  - token имеет допустимый тип
+  - params.task отсутствует
+end note
+
+S2 -> SOWA: POST /mcp\ntools/call, id=18
+note right of SOWA
+  Валидировать request body
+  по ветке CallToolRequest.
+end note
+SOWA -> S4: POST /mcp\ntools/call, id=18
+
+S4 --> SOWA: HTTP 200\nContent-Type: text/event-stream
+SOWA --> S2: Открытый response stream\nбез буферизации
+S2 --> S1: Открытый response stream\nисходного POST
+
+loop Ноль или несколько progress-событий
+  S4 -->> SOWA: SSE data:\nnotifications/progress\nprogressToken=p18
+  note right of SOWA
+    Не применять request JSON Schema
+    к text/event-stream response.
+    Передавать событие потоково.
+  end note
+  SOWA -->> S2: SSE progress без преобразования
+  note left of S2
+    Проверить:
+    - method=notifications/progress
+    - id отсутствует
+    - token=p18
+    - progress не уменьшается
+    - событие до финального result
+  end note
+  S2 -->> S1: Проверенный progress
+end
+
+alt Успешный финальный результат
+  S4 -->> SOWA: SSE data:\nJSON-RPC result, id=18
+else Финальная JSON-RPC ошибка
+  S4 -->> SOWA: SSE data:\nJSON-RPC error, id=18
+end
+
+SOWA -->> S2: Финальное SSE-событие
+note left of S2
+  Проверить:
+  - id=18
+  - ровно result или error
+  - финальное событие только одно
+  - после него нет других событий
+end note
+S2 -->> S1: Проверенный финальный result/error
+S4 --> S1: Поток закрывается через SOWA и сервис 2
+
+note over S1,S4
+  Новый HTTP-запрос не создаётся.
+  Progress и финальный result идут в response body того же POST.
+
+  При обрыве до финального ответа:
+  MCP_RESULT_UNKNOWN, reconnect и автоматический retry запрещены.
+end note
+
+@enduml
