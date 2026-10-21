@@ -1,0 +1,56 @@
+@startuml
+title V2 — MCP 2025-11-25: GET /mcp и таймауты прокси
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: GET /mcp\nAccept: text/event-stream\nsession/version headers
+S2 -> SOWA: Разрешённый GET
+SOWA -> S4: HTTP-policy пройдена\nGET /mcp
+S4 --> SOWA: 200 text/event-stream\nretry: 3000
+SOWA --> S2: Поток без буферизации
+S2 --> S1: SSE stream
+
+loop Пока не достигнут absolute timeout
+  S4 -->> SOWA: : keep-alive
+  SOWA -->> S2: heartbeat без буфера
+  S2 -->> S1: heartbeat
+  note over S2,SOWA
+    H < min(T_idle_2, T_idle_sowa)
+    Рекомендуется H <= min(...) / 2
+  end note
+end
+
+S4 -->> SOWA: id: evt-25\ndata: допустимое событие
+SOWA -->> S2: SSE event
+S2 -->> S1: SSE event
+S1 -> S1: Сохранить Last-Event-ID=evt-25
+
+... приближается плановая ротация R ...
+
+S4 -->> SOWA: retry: 3000\n: rotate-before-absolute-timeout
+SOWA -->> S2: SSE control data
+S2 -->> S1: retry + закрытие stream
+note over S2,SOWA
+  R < min(T_max_2, T_max_sowa)
+end note
+
+S1 -> S1: Ждать retry с jitter
+S1 -> S2: GET /mcp\nLast-Event-ID: evt-25\nsession/version headers
+S2 -> SOWA: Повторная HTTP-policy проверка
+SOWA -> S4: GET /mcp\nLast-Event-ID: evt-25
+S4 --> SOWA: Новый SSE stream\nпродолжение после evt-25
+SOWA --> S2: Поток без буферизации
+S2 --> S1: Продолжение после evt-25
+
+note over S1,S4
+  Ограничить число reconnect и общий deadline.
+  GET — только транспорт replay/progress/final result.
+  Он не разрешает sampling, elicitation, roots,
+  resources, prompts, logging и прочие MCP-функции.
+end note
+
+@enduml

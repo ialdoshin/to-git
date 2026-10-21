@@ -1,0 +1,48 @@
+@startuml
+title V2 — MCP 2025-11-25: tools/call с JSON-ответом
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST /mcp\ntools/call, id=17\nname + arguments\nMCP-Session-Id
+note right of S2
+  Проверить:
+  - method и tool allowlist
+  - права
+  - headers
+  - params.task отсутствует
+end note
+S2 -> SOWA: POST /mcp\ntools/call, id=17
+note right of SOWA
+  Валидировать:
+  - JSON-RPC envelope
+  - params.name
+  - arguments schema
+  - допустимую _meta
+end note
+SOWA -> S4: POST /mcp\ntools/call, id=17
+
+alt Успешный result
+  S4 --> SOWA: 200 application/json\nCallToolResult, id=17
+else JSON-RPC error
+  S4 --> SOWA: 200 application/json\nerror, id=17
+end
+
+SOWA --> S2: Ответ без преобразования
+note left of S2
+  Проверить:
+  - id=17
+  - result XOR error
+  - task handle отсутствует
+end note
+S2 --> S1: Проверенный финальный ответ
+
+note over S1,S4
+  GET в этом сценарии не используется:
+  POST завершился обычным JSON-ответом.
+end note
+
+@enduml

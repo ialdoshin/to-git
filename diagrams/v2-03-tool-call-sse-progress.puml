@@ -1,0 +1,45 @@
+@startuml
+title V2 — MCP 2025-11-25: tools/call с SSE без обрыва
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST /mcp\ntools/call, id=18\nprogressToken=p18
+S2 -> SOWA: Проверенный POST\nid=18
+SOWA -> S4: JSON Schema пройдена\nPOST tools/call, id=18
+
+S4 --> SOWA: 200 text/event-stream
+SOWA --> S2: Response stream без буферизации
+S2 --> S1: Response stream исходного POST
+
+loop До завершения операции
+  S4 -->> SOWA: : keep-alive
+  SOWA -->> S2: SSE comment
+  S2 -->> S1: SSE comment
+
+  S4 -->> SOWA: id: evt-0001\ndata: notifications/progress p18
+  SOWA -->> S2: SSE event без преобразования
+  note left of S2
+    Проверить token,
+    монотонность progress
+    и порядок событий.
+  end note
+  S2 -->> S1: Проверенный progress
+end
+
+S4 -->> SOWA: id: evt-0004\ndata: final result, id=18
+SOWA -->> S2: Финальное SSE-событие
+S2 -->> S1: Проверенный result, id=18
+S4 --> SOWA: HTTP response stream закрывается
+SOWA --> S2: Поток закрывается
+S2 --> S1: Поток закрывается
+
+note over S1,S4
+  Поток завершён до timeout.
+  GET/reconnect не потребовался.
+end note
+
+@enduml

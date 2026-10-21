@@ -1,0 +1,46 @@
+@startuml
+title V2 — MCP 2025-11-25: инициализация
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST /mcp\ninitialize, id=1\nprotocolVersion=2025-11-25\ncapabilities={}
+note right of S2
+  Проверить policy:
+  - HTTP headers
+  - method
+  - protocol version
+  - capabilities={}
+end note
+S2 -> SOWA: POST /mcp\ninitialize, id=1
+note right of SOWA
+  Валидировать JSON body:
+  oneOf.InitializeRequest
+end note
+SOWA -> S4: POST /mcp\ninitialize, id=1
+S4 --> SOWA: 200 InitializeResult, id=1\nMCP-Session-Id: session-123
+SOWA --> S2: Ответ без преобразования
+S2 --> S1: Проверенный InitializeResult\nMCP-Session-Id: session-123
+
+S1 -> S2: POST /mcp\nnotifications/initialized\nprotocol/session headers
+S2 -> SOWA: Разрешённый lifecycle-вызов
+note right of SOWA
+  Валидировать JSON body:
+  oneOf.InitializedNotification
+  id отсутствует
+end note
+SOWA -> S4: POST /mcp\nnotifications/initialized
+S4 --> SOWA: 202 Accepted
+SOWA --> S2: 202 Accepted
+S2 --> S1: 202 Accepted
+
+note over S1,S4
+  GET/resumability не согласуются в initialize.
+  Это отдельный интеграционный контракт V2,
+  который проверяется тестами.
+end note
+
+@enduml

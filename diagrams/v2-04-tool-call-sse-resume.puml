@@ -1,0 +1,61 @@
+@startuml
+title V2 — MCP 2025-11-25: восстановление tools/call SSE
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST /mcp\ntools/call, id=19\nprogressToken=p19
+S2 -> SOWA: POST tools/call, id=19
+SOWA -> S4: JSON Schema пройдена\nPOST tools/call, id=19
+S4 --> SOWA: 200 text/event-stream
+SOWA --> S2: SSE response stream
+S2 --> S1: SSE response stream
+
+S4 -->> SOWA: id: evt-1\ndata: progress p19
+SOWA -->> S2: SSE event
+S2 -->> S1: Проверенный progress
+S4 -->> SOWA: id: evt-2\ndata: progress p19
+SOWA -->> S2: SSE event
+S2 -->> S1: Проверенный progress
+S1 -> S1: Сохранить Last-Event-ID=evt-2
+
+... proxy timeout или потеря соединения ...
+
+S1 -> S2: GET /mcp\nAccept: text/event-stream\nMCP-Protocol-Version: 2025-11-25\nMCP-Session-Id: session-123\nLast-Event-ID: evt-2
+note right of S2
+  Проверить GET-policy:
+  session, version, event ID,
+  лимит reconnect и deadline.
+end note
+S2 -> SOWA: GET /mcp + headers
+note right of SOWA
+  JSON body отсутствует.
+  Проверить HTTP-policy,
+  а не JSON Schema.
+end note
+SOWA -> S4: GET /mcp\nLast-Event-ID: evt-2
+S4 -> S4: Найти session, stream и event\nв replay history
+
+alt Resume доступен
+  S4 --> SOWA: 200 text/event-stream
+  S4 -->> SOWA: id: evt-3\ndata: следующий progress p19
+  SOWA -->> S2: Replay/event stream
+  S2 -->> S1: Проверенный progress
+  S4 -->> SOWA: id: evt-4\ndata: final result, id=19
+  SOWA -->> S2: Финальное событие
+  S2 -->> S1: Проверенный result, id=19
+else Resume невозможен
+  S4 --> SOWA: 4xx или SSE error\nresume unavailable
+  SOWA --> S2: Ошибка восстановления
+  S2 --> S1: MCP_RESULT_UNKNOWN
+end
+
+note over S1,S4
+  Клиент не повторяет POST tools/call:
+  операция могла выполниться на Сервисе 4.
+end note
+
+@enduml

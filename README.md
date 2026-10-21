@@ -1,4 +1,7 @@
-# Ограниченный профиль MCP 2025-11-25
+# Вариант V1 — ограниченный профиль MCP 2025-11-25
+
+> В V1 `GET /mcp` запрещён. Вариант с разрешённым GET, reconnect и учётом
+> таймаутов описан в [V2](V2.md).
 
 ## Назначение
 
@@ -345,4 +348,8 @@ SSE keep-alive не отменяет абсолютный timeout прокси.
 - [Инициализация](diagrams/01-initialization.puml)
 - [tools/call с JSON-ответом](diagrams/02-tool-call-json.puml)
 - [tools/call с SSE и progress](diagrams/03-tool-call-sse-progress.puml)
+
+## Другие варианты
+
+- [V2 — GET /mcp разрешён, таймауты и SSE resume](V2.md)
 
