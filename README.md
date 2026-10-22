@@ -119,6 +119,79 @@
 - в `_meta` разрешён только `progressToken`;
 - `progressToken` является строкой или числом.
 
+### Полный HTTP-пример tools/call
+
+Один и тот же запрос может получить обычный JSON-ответ или конечный SSE-ответ:
+
+```http
+POST /mcp HTTP/1.1
+Host: mcp.example.internal
+Content-Type: application/json
+Accept: application/json, text/event-stream
+MCP-Protocol-Version: 2025-11-25
+MCP-Session-Id: session-123
+
+{
+  "jsonrpc": "2.0",
+  "id": 17,
+  "method": "tools/call",
+  "params": {
+    "name": "get_weather",
+    "arguments": {
+      "city": "Warsaw"
+    },
+    "_meta": {
+      "progressToken": "progress-17"
+    }
+  }
+}
+```
+
+`MCP-Session-Id` передаётся только в том случае, если сервис 4 выдал его при
+инициализации.
+
+#### Вариант 1: обычный JSON-ответ
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 17,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      }
+    ],
+    "isError": false
+  }
+}
+```
+
+HTTP-запрос завершается сразу после получения полного JSON. Поле `id` должно совпадать
+с `id` исходного `tools/call`.
+
+#### Вариант 2: SSE-ответ на том же POST
+
+```http
+HTTP/1.1 200 OK
+Content-Type: text/event-stream
+Cache-Control: no-cache
+
+data: {"jsonrpc":"2.0","method":"notifications/progress","params":{"progressToken":"progress-17","progress":50,"total":100,"message":"Выполнение"}}
+
+data: {"jsonrpc":"2.0","id":17,"result":{"content":[{"type":"text","text":"В Варшаве +12 °C"}],"isError":false}}
+
+```
+
+Это поток ответа на исходный `POST /mcp`: клиент не делает дополнительный GET. После
+финального `result` или `error` сервис 4 закрывает HTTP response stream. В V1 reconnect
+и `Last-Event-ID` запрещены; при обрыве до финального события результат считается
+`MCP_RESULT_UNKNOWN`.
+
 ### ProgressNotification
 
 Progress разрешён только внутри SSE-ответа на тот же `tools/call`:
