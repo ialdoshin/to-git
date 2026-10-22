@@ -38,7 +38,14 @@
 
 ### InitializeRequest
 
-```json
+Клиент начинает инициализацию следующим HTTP-запросом:
+
+```http
+POST /mcp HTTP/1.1
+Host: mcp.example.internal
+Content-Type: application/json
+Accept: application/json, text/event-stream
+
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -57,9 +64,16 @@
 Клиентские capabilities должны быть пустыми. Клиент не объявляет `roots`, `sampling`,
 `elicitation`, `tasks` или `experimental`.
 
-Допустимый ответ сервера:
+В первом запросе версия передаётся в `params.protocolVersion`. Заголовок
+`MCP-Protocol-Version` потребуется в последующих запросах.
 
-```json
+Допустимый полный ответ сервера:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+MCP-Session-Id: session-123
+
 {
   "jsonrpc": "2.0",
   "id": 1,
@@ -78,38 +92,40 @@
 }
 ```
 
+Заголовок `MCP-Session-Id` опционален. Если сервер его вернул, клиент обязан передавать
+это значение во всех последующих запросах данной MCP-сессии.
+
 Сервер не объявляет `resources`, `prompts`, `logging`, `completions`, `tasks` или
 `experimental`.
 
 ### InitializedNotification
 
-```json
+После успешного `InitializeResult` клиент отправляет отдельный HTTP-запрос:
+
+```http
+POST /mcp HTTP/1.1
+Host: mcp.example.internal
+Content-Type: application/json
+Accept: application/json, text/event-stream
+MCP-Protocol-Version: 2025-11-25
+MCP-Session-Id: session-123
+
 {
   "jsonrpc": "2.0",
   "method": "notifications/initialized"
 }
 ```
 
-Уведомление не содержит `id`. Ожидаемый HTTP-ответ — `202 Accepted` без тела.
+`MCP-Session-Id` включается только тогда, когда сервер выдал его в ответе на
+`initialize`. Уведомление не содержит JSON-RPC `id`.
+
+Если уведомление принято, сервер отвечает без тела:
+
+```http
+HTTP/1.1 202 Accepted
+```
 
 ### CallToolRequest
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 17,
-  "method": "tools/call",
-  "params": {
-    "name": "get_weather",
-    "arguments": {
-      "city": "Warsaw"
-    },
-    "_meta": {
-      "progressToken": "progress-17"
-    }
-  }
-}
-```
 
 Ограничения:
 
@@ -119,7 +135,7 @@
 - в `_meta` разрешён только `progressToken`;
 - `progressToken` является строкой или числом.
 
-### Полный HTTP-пример tools/call
+#### Полный HTTP-пример tools/call
 
 Один и тот же запрос может получить обычный JSON-ответ или конечный SSE-ответ:
 
@@ -194,19 +210,12 @@ data: {"jsonrpc":"2.0","id":17,"result":{"content":[{"type":"text","text":"В В
 
 ### ProgressNotification
 
-Progress разрешён только внутри SSE-ответа на тот же `tools/call`:
+Progress не является отдельным HTTP-запросом клиента. Сервис 4 отправляет его как
+событие внутри уже открытого SSE-ответа на `POST tools/call`:
 
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "notifications/progress",
-  "params": {
-    "progressToken": "progress-17",
-    "progress": 50,
-    "total": 100,
-    "message": "Выполнение"
-  }
-}
+```http
+data: {"jsonrpc":"2.0","method":"notifications/progress","params":{"progressToken":"progress-17","progress":50,"total":100,"message":"Выполнение"}}
+
 ```
 
 Требования:
@@ -216,6 +225,34 @@ Progress разрешён только внутри SSE-ответа на тот
 - `progress` является числом и не уменьшается;
 - `total` и `message` опциональны;
 - после финального `result` или `error` progress запрещён.
+
+### Завершение MCP-сессии через DELETE
+
+Если сервис 4 выдал `MCP-Session-Id` и поддерживает явное завершение сессии, клиент
+может отправить:
+
+```http
+DELETE /mcp HTTP/1.1
+Host: mcp.example.internal
+MCP-Protocol-Version: 2025-11-25
+MCP-Session-Id: session-123
+```
+
+Пример успешного ответа:
+
+```http
+HTTP/1.1 204 No Content
+```
+
+Если явное завершение не поддерживается, сервер возвращает:
+
+```http
+HTTP/1.1 405 Method Not Allowed
+Allow: POST
+```
+
+При отсутствии выданного Session ID клиент не отправляет `DELETE /mcp`; сервер очищает
+своё состояние по TTL.
 
 ## HTTP-заголовки
 
