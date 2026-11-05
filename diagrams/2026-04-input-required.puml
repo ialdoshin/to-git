@@ -1,0 +1,29 @@
+@startuml
+title MCP 2026-07-28: input_required запрещён профилем
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST tools/call, id=18\nclientCapabilities={}
+S2 -> SOWA: Проверенный POST
+SOWA -> S4: JSON Schema пройдена
+S4 --> SOWA: 200 resultType=input_required\ninputRequests, requestState
+SOWA --> S2: JSON-ответ без преобразования
+note left of S2
+  Capabilities не выключают resultType.
+  JSON-ответ блокируется,
+  потому что resultType
+  не равен complete.
+end note
+S2 --> S1: Ошибка контракта
+S1 -> S1: Не отправлять повторный\ntools/call с inputResponses
+
+note over S1,S4
+  Разрешённый сервер сразу возвращает
+  resultType=complete или JSON-RPC error.
+end note
+
+@enduml

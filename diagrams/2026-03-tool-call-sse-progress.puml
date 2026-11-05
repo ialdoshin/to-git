@@ -1,0 +1,43 @@
+@startuml
+title MCP 2026-07-28: tools/call с SSE без восстановления
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST tools/call, id=18\nprogressToken=progress-18
+S2 -> SOWA: Проверенный POST
+SOWA -> S4: JSON Schema пройдена
+S4 --> SOWA: 200 text/event-stream
+SOWA --> S2: Поток без буферизации
+S2 --> S1: Поток исходного POST
+
+loop До финального события
+  S4 -->> SOWA: : keep-alive
+  SOWA -->> S2: SSE comment
+  S2 -->> S1: SSE comment
+  S4 -->> SOWA: data: notifications/progress
+  SOWA -->> S2: SSE event
+  note left of S2
+    Проверить progressToken
+    и монотонность progress.
+  end note
+  S2 -->> S1: Проверенный progress
+end
+
+S4 -->> SOWA: data: resultType=complete, id=18
+SOWA -->> S2: Финальное событие
+S2 -->> S1: Проверенный result
+S4 --> SOWA: Поток закрывается
+SOWA --> S2: Поток закрывается
+S2 --> S1: Поток закрывается
+
+note over S1,S4
+  GET и Last-Event-ID отсутствуют.
+  Обрыв до complete даёт
+  MCP_RESULT_UNKNOWN.
+end note
+
+@enduml

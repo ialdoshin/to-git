@@ -1,0 +1,31 @@
+@startuml
+title MCP 2026-07-28: необязательный server/discover
+
+autonumber
+participant "Сервис 1\nMCP Client" as S1
+participant "Сервис 2\nPolicy Proxy" as S2
+participant "SOWA\nJSON Schema Gateway" as SOWA
+participant "Сервис 4\nMCP Server" as S4
+
+S1 -> S2: POST /mcp/{dzo}/{server}\nserver/discover\nMCP-Protocol-Version: 2026-07-28\nMcp-Method: server/discover\n_meta.protocolVersion = 2026-07-28\nclientCapabilities = {}
+note right of S2
+  Сверить заголовок и _meta.
+  Проверить пустые capabilities.
+  Сессия не ожидается.
+end note
+S2 -> SOWA: POST server/discover
+note right of SOWA
+  Валидировать JSON Schema
+  одного JSON-объекта.
+end note
+SOWA -> S4: POST server/discover
+S4 --> SOWA: 200 resultType=complete\nsupportedVersions, capabilities
+SOWA --> S2: Ответ без преобразования
+S2 --> S1: Проверенный discover-ответ
+
+note over S1,S4
+  Ответ не создаёт MCP-сессию.
+  Следующий tools/call — новый POST.
+end note
+
+@enduml
