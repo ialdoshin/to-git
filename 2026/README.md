@@ -13,6 +13,7 @@
 - [Capabilities и контроль функций](02-capabilities.md)
 - [input_required: все варианты сообщений](04-input-required.md)
 - [Все методы и что можно разрешить позже](05-metody.md)
+- [Заголовки запроса и ответа](07-zagolovki.md)
 
 ## Диаграммы
 
