@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tool-get-weather-arguments",
+  "title": "arguments тулы get_weather",
+  "description": "Отдельная схема. SOWA подставляет её по Mcp-Name и проверяет только params.arguments. В общий oneOf конверта не входит.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["city"],
+  "properties": {
+    "city": { "type": "string", "minLength": 1, "maxLength": 128 }
+  }
+}

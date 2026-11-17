@@ -14,6 +14,7 @@
 - [input_required: все варианты сообщений](04-input-required.md)
 - [Все методы и что можно разрешить позже](05-metody.md)
 - [Заголовки запроса и ответа](07-zagolovki.md)
+- [Общая схема SOWA на discover и tools/call](08-sowa-schema.md)
 
 ## Диаграммы
 

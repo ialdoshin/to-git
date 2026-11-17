@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mcp-request-2026-07-28",
+  "title": "Единый конверт MCP-запроса 2026-07-28",
+  "description": "Общие поля каждого POST. Разрешены только server/discover и tools/call. Аргументы конкретной тулы этой схемой не описываются.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["jsonrpc", "id", "method", "params"],
+  "properties": {
+    "jsonrpc": { "enum": ["2.0"] },
+    "id": { "$ref": "#/definitions/requestId" },
+    "method": { "enum": ["server/discover", "tools/call"] },
+    "params": { "type": "object" }
+  },
+  "oneOf": [
+    { "$ref": "#/definitions/discover" },
+    { "$ref": "#/definitions/toolsCall" }
+  ],
+  "definitions": {
+    "requestId": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 128 },
+        { "type": "integer" }
+      ]
+    },
+    "protocolVersion": {
+      "enum": ["2026-07-28"]
+    },
+    "clientInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "version": { "type": "string", "minLength": 1, "maxLength": 64 }
+      }
+    },
+    "emptyCapabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 0
+    },
+    "progressToken": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 128 },
+        { "type": "integer" }
+      ]
+    },
+    "discoverMeta": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "io.modelcontextprotocol/protocolVersion",
+        "io.modelcontextprotocol/clientInfo",
+        "io.modelcontextprotocol/clientCapabilities"
+      ],
+      "properties": {
+        "io.modelcontextprotocol/protocolVersion": { "$ref": "#/definitions/protocolVersion" },
+        "io.modelcontextprotocol/clientInfo": { "$ref": "#/definitions/clientInfo" },
+        "io.modelcontextprotocol/clientCapabilities": { "$ref": "#/definitions/emptyCapabilities" }
+      }
+    },
+    "callMeta": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "io.modelcontextprotocol/protocolVersion",
+        "io.modelcontextprotocol/clientInfo",
+        "io.modelcontextprotocol/clientCapabilities"
+      ],
+      "properties": {
+        "io.modelcontextprotocol/protocolVersion": { "$ref": "#/definitions/protocolVersion" },
+        "io.modelcontextprotocol/clientInfo": { "$ref": "#/definitions/clientInfo" },
+        "io.modelcontextprotocol/clientCapabilities": { "$ref": "#/definitions/emptyCapabilities" },
+        "progressToken": { "$ref": "#/definitions/progressToken" }
+      }
+    },
+    "discover": {
+      "properties": {
+        "method": { "enum": ["server/discover"] },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["_meta"],
+          "properties": {
+            "_meta": { "$ref": "#/definitions/discoverMeta" }
+          }
+        }
+      }
+    },
+    "toolName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "toolsCall": {
+      "properties": {
+        "method": { "enum": ["tools/call"] },
+        "params": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "arguments", "_meta"],
+          "properties": {
+            "name": { "$ref": "#/definitions/toolName" },
+            "arguments": { "type": "object" },
+            "_meta": { "$ref": "#/definitions/callMeta" }
+          }
+        }
+      }
+    }
+  }
+}
