@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mcp-response-v2",
+  "title": "Общий конверт MCP-ответа, мягкая проверка",
+  "description": "Финальное JSON-RPC-сообщение на server/discover или tools/call: ровно одно из result или error. Состав result по методу не разбирается. Неизвестные ключи проходят. Кадр SSE схема не описывает: проверяется JSON из события data с полем id.",
+  "type": "object",
+  "required": ["jsonrpc", "id"],
+  "properties": {
+    "jsonrpc": { "const": "2.0" },
+    "id": { "anyOf": [{ "type": "string" }, { "type": "integer" }, { "type": "null" }] },
+    "result": { "$ref": "#/definitions/result" },
+    "error": { "$ref": "#/definitions/error" }
+  },
+  "oneOf": [
+    { "required": ["result"] },
+    { "required": ["error"] }
+  ],
+  "definitions": {
+    "result": {
+      "type": "object",
+      "required": ["resultType"],
+      "properties": {
+        "resultType": { "const": "complete" },
+        "_meta": { "type": "object" }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "integer" },
+        "message": { "type": "string" }
+      }
+    }
+  }
+}

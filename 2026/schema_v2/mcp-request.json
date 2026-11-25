@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mcp-request-v2",
+  "title": "Общий конверт MCP-запроса, мягкая проверка",
+  "description": "Общие поля для server/discover и tools/call. Проверяются наличие и тип полей. Неизвестные ключи на любом уровне проходят. Значения версии, capabilities и allowlist тулов сверяет сервис 2, аргументы тулы — отдельная схема по Mcp-Name.",
+  "type": "object",
+  "required": ["jsonrpc", "id", "method", "params"],
+  "properties": {
+    "jsonrpc": { "const": "2.0" },
+    "id": { "$ref": "#/definitions/requestId" },
+    "method": { "enum": ["server/discover", "tools/call"] },
+    "params": { "$ref": "#/definitions/params" }
+  },
+  "if": {
+    "type": "object",
+    "required": ["method"],
+    "properties": { "method": { "const": "tools/call" } }
+  },
+  "then": {
+    "type": "object",
+    "properties": { "params": { "$ref": "#/definitions/toolsCallParams" } }
+  },
+  "definitions": {
+    "requestId": {
+      "anyOf": [{ "type": "string" }, { "type": "integer" }]
+    },
+    "params": {
+      "type": "object",
+      "required": ["_meta"],
+      "properties": {
+        "_meta": { "$ref": "#/definitions/meta" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "io.modelcontextprotocol/protocolVersion",
+        "io.modelcontextprotocol/clientInfo",
+        "io.modelcontextprotocol/clientCapabilities"
+      ],
+      "properties": {
+        "io.modelcontextprotocol/protocolVersion": { "type": "string", "minLength": 1 },
+        "io.modelcontextprotocol/clientInfo": { "$ref": "#/definitions/clientInfo" },
+        "io.modelcontextprotocol/clientCapabilities": { "type": "object" },
+        "progressToken": { "$ref": "#/definitions/requestId" }
+      }
+    },
+    "clientInfo": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "toolsCallParams": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "arguments": { "type": "object" }
+      }
+    }
+  }
+}
