@@ -10,6 +10,8 @@
 
 Пример схемы аргументов: [schemas/tool-arguments.example.json](schemas/tool-arguments.example.json).
 
+Вариант с мягкой проверкой только общих полей: [schema_v2](schema_v2/README.md).
+
 Корень тела — один JSON-объект. Массив, пакет JSON-RPC и любой другой `method` схема отклоняет.
 
 ## Общие поля
