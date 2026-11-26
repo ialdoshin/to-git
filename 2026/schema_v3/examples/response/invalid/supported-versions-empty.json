@@ -1,0 +1,11 @@
+{
+  "jsonrpc": "2.0",
+  "id": "discover-1",
+  "result": {
+    "resultType": "complete",
+    "supportedVersions": [],
+    "capabilities": {
+      "tools": {}
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mcp-request-v3",
+  "title": "Конверт MCP-запроса, security-режим",
+  "description": "Общие поля для server/discover и tools/call. У каждого объявленного поля есть явные границы: длина строк, диапазон чисел, число ключей и элементов. Неизвестные ключи внутри params, _meta, clientInfo, clientCapabilities и arguments проходят, но их число и длина имени ограничены. Превышение лимита — обычная ошибка валидации, а не сбой.",
+  "type": "object",
+  "maxProperties": 4,
+  "additionalProperties": false,
+  "required": ["jsonrpc", "id", "method", "params"],
+  "properties": {
+    "jsonrpc": { "const": "2.0" },
+    "id": { "$ref": "#/definitions/requestId" },
+    "method": { "enum": ["server/discover", "tools/call"] },
+    "params": { "$ref": "#/definitions/params" }
+  },
+  "if": {
+    "type": "object",
+    "required": ["method"],
+    "properties": { "method": { "const": "tools/call" } }
+  },
+  "then": {
+    "type": "object",
+    "properties": { "params": { "$ref": "#/definitions/toolsCallParams" } }
+  },
+  "definitions": {
+    "requestId": {
+      "anyOf": [
+        { "type": "string", "minLength": 1, "maxLength": 128 },
+        { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 }
+      ]
+    },
+    "keyName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "longText": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 4096
+    },
+    "url": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "protocolVersion": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "params": {
+      "type": "object",
+      "maxProperties": 16,
+      "propertyNames": { "$ref": "#/definitions/keyName" },
+      "required": ["_meta"],
+      "properties": {
+        "_meta": { "$ref": "#/definitions/meta" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "maxProperties": 32,
+      "propertyNames": { "$ref": "#/definitions/keyName" },
+      "required": [
+        "io.modelcontextprotocol/protocolVersion",
+        "io.modelcontextprotocol/clientInfo",
+        "io.modelcontextprotocol/clientCapabilities"
+      ],
+      "properties": {
+        "io.modelcontextprotocol/protocolVersion": { "$ref": "#/definitions/protocolVersion" },
+        "io.modelcontextprotocol/clientInfo": { "$ref": "#/definitions/clientInfo" },
+        "io.modelcontextprotocol/clientCapabilities": { "$ref": "#/definitions/clientCapabilities" },
+        "progressToken": { "$ref": "#/definitions/requestId" }
+      }
+    },
+    "clientInfo": {
+      "type": "object",
+      "maxProperties": 16,
+      "propertyNames": { "$ref": "#/definitions/keyName" },
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "$ref": "#/definitions/shortText" },
+        "version": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "title": { "$ref": "#/definitions/shortText" },
+        "description": { "$ref": "#/definitions/longText" },
+        "websiteUrl": { "$ref": "#/definitions/url" }
+      }
+    },
+    "clientCapabilities": {
+      "type": "object",
+      "maxProperties": 32,
+      "propertyNames": { "$ref": "#/definitions/keyName" }
+    },
+    "toolName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9_.-]+$"
+    },
+    "toolsCallParams": {
+      "type": "object",
+      "maxProperties": 16,
+      "propertyNames": { "$ref": "#/definitions/keyName" },
+      "required": ["name"],
+      "properties": {
+        "name": { "$ref": "#/definitions/toolName" },
+        "arguments": {
+          "type": "object",
+          "maxProperties": 64,
+          "propertyNames": { "$ref": "#/definitions/keyName" }
+        }
+      }
+    }
+  }
+}
