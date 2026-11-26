@@ -8,63 +8,88 @@
   "additionalProperties": false,
   "required": ["jsonrpc", "id", "method", "params"],
   "properties": {
-    "jsonrpc": { "const": "2.0" },
-    "id": { "$ref": "#/definitions/requestId" },
-    "method": { "enum": ["server/discover", "tools/call"] },
-    "params": { "$ref": "#/definitions/params" }
+    "jsonrpc": {
+      "description": "Версия JSON-RPC. Только строка 2.0.",
+      "const": "2.0"
+    },
+    "id": {
+      "description": "Идентификатор запроса. Ответ приходит с тем же id, по нему клиент связывает ответ с вызовом. Правила — в requestId.",
+      "$ref": "#/definitions/requestId"
+    },
+    "method": {
+      "description": "Вызываемый метод MCP. Разрешены только server/discover и tools/call. Для tools/call дополнительно применяется toolsCallParams. Должен совпадать с заголовком Mcp-Method.",
+      "enum": ["server/discover", "tools/call"]
+    },
+    "params": {
+      "description": "Параметры вызова. Общие для обоих методов правила — в определении params.",
+      "$ref": "#/definitions/params"
+    }
   },
   "if": {
+    "description": "Условие: метод равен tools/call.",
     "type": "object",
     "required": ["method"],
     "properties": { "method": { "const": "tools/call" } }
   },
   "then": {
+    "description": "Для tools/call params дополнительно проверяется по toolsCallParams.",
     "type": "object",
     "properties": { "params": { "$ref": "#/definitions/toolsCallParams" } }
   },
   "definitions": {
     "requestId": {
+      "description": "Идентификатор JSON-RPC: непустая строка до 128 символов либо целое в пределах безопасного целого JavaScript ±(2^53 − 1). null и дробные числа запрещены. Используется для id и progressToken.",
       "anyOf": [
-        { "type": "string", "minLength": 1, "maxLength": 128 },
-        { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 }
+        { "description": "Строковый идентификатор.", "type": "string", "minLength": 1, "maxLength": 128 },
+        { "description": "Целочисленный идентификатор.", "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 }
       ]
     },
     "keyName": {
+      "description": "Имя ключа в открытом объекте, в том числе неизвестного. Подключается через propertyNames. Ограничивает длину имени 1–256 символами, значение ключа не проверяет.",
       "type": "string",
       "minLength": 1,
       "maxLength": 256
     },
     "shortText": {
+      "description": "Короткая непустая строка до 256 символов: имена и заголовки.",
       "type": "string",
       "minLength": 1,
       "maxLength": 256
     },
     "longText": {
+      "description": "Произвольный текст до 4096 символов, может быть пустым: описания.",
       "type": "string",
       "minLength": 0,
       "maxLength": 4096
     },
     "url": {
+      "description": "Адрес до 2048 символов. Формат URL не проверяется.",
       "type": "string",
       "minLength": 1,
       "maxLength": 2048
     },
     "protocolVersion": {
+      "description": "Версия протокола MCP в формате ГГГГ-ММ-ДД, ровно 10 символов. Конкретное значение схема не сверяет: совпадение с заголовком MCP-Protocol-Version и поддержку версии проверяет сервис 2.",
       "type": "string",
       "minLength": 10,
       "maxLength": 10,
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
     },
     "params": {
+      "description": "Параметры запроса для обоих методов. Обязателен только _meta. Для tools/call поверх применяется toolsCallParams. Неизвестные ключи проходят; ключей не больше 16.",
       "type": "object",
       "maxProperties": 16,
       "propertyNames": { "$ref": "#/definitions/keyName" },
       "required": ["_meta"],
       "properties": {
-        "_meta": { "$ref": "#/definitions/meta" }
+        "_meta": {
+          "description": "Метаданные запроса. Правила — в определении meta.",
+          "$ref": "#/definitions/meta"
+        }
       }
     },
     "meta": {
+      "description": "Метаданные запроса: версия протокола и сведения о клиенте. Без сессии и initialize они передаются в каждом запросе. Обязательны версия и clientCapabilities. Свои ключи проходят (рекомендуется собственный префикс, например com.example/); ключей не больше 32.",
       "type": "object",
       "maxProperties": 32,
       "propertyNames": { "$ref": "#/definitions/keyName" },
@@ -73,44 +98,81 @@
         "io.modelcontextprotocol/clientCapabilities"
       ],
       "properties": {
-        "io.modelcontextprotocol/protocolVersion": { "$ref": "#/definitions/protocolVersion" },
-        "io.modelcontextprotocol/clientInfo": { "$ref": "#/definitions/clientInfo" },
-        "io.modelcontextprotocol/clientCapabilities": { "$ref": "#/definitions/clientCapabilities" },
-        "progressToken": { "$ref": "#/definitions/requestId" }
+        "io.modelcontextprotocol/protocolVersion": {
+          "description": "Версия протокола, на которой клиент отправил запрос. Обязательна.",
+          "$ref": "#/definitions/protocolVersion"
+        },
+        "io.modelcontextprotocol/clientInfo": {
+          "description": "Сведения о клиентском приложении. Необязательно, как в MCP 2026-07-28.",
+          "$ref": "#/definitions/clientInfo"
+        },
+        "io.modelcontextprotocol/clientCapabilities": {
+          "description": "Возможности клиента. Обязательно. Состав схема не сверяет, решение принимает сервис 2.",
+          "$ref": "#/definitions/clientCapabilities"
+        },
+        "progressToken": {
+          "description": "Токен прогресса. Необязателен. Если передан, сервер может слать notifications/progress с этим токеном в SSE того же POST. Правила — в requestId.",
+          "$ref": "#/definitions/requestId"
+        }
       }
     },
     "clientInfo": {
+      "description": "Описание клиентского приложения. Если объект передан, обязательны name и version. Неизвестные ключи (например, icons) проходят; ключей не больше 16.",
       "type": "object",
       "maxProperties": 16,
       "propertyNames": { "$ref": "#/definitions/keyName" },
       "required": ["name", "version"],
       "properties": {
-        "name": { "$ref": "#/definitions/shortText" },
-        "version": { "type": "string", "minLength": 1, "maxLength": 64 },
-        "title": { "$ref": "#/definitions/shortText" },
-        "description": { "$ref": "#/definitions/longText" },
-        "websiteUrl": { "$ref": "#/definitions/url" }
+        "name": {
+          "description": "Программное имя клиента, 1–256 символов.",
+          "$ref": "#/definitions/shortText"
+        },
+        "version": {
+          "description": "Версия клиента, 1–64 символа. Формат не проверяется.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "title": {
+          "description": "Отображаемое имя клиента, 1–256 символов. Необязательно.",
+          "$ref": "#/definitions/shortText"
+        },
+        "description": {
+          "description": "Описание клиента, до 4096 символов. Необязательно.",
+          "$ref": "#/definitions/longText"
+        },
+        "websiteUrl": {
+          "description": "Сайт клиента, до 2048 символов. Необязательно.",
+          "$ref": "#/definitions/url"
+        }
       }
     },
     "clientCapabilities": {
+      "description": "Возможности, которые объявляет клиент (например, elicitation). Состав не проверяется, ограничены число ключей (до 32) и длина имени. Что разрешено, решает сервис 2.",
       "type": "object",
       "maxProperties": 32,
       "propertyNames": { "$ref": "#/definitions/keyName" }
     },
     "toolName": {
+      "description": "Имя тулы, 1–128 символов: латиница, цифры, _, . и -. Предел длины — из MCP. Должно совпадать с заголовком Mcp-Name и входить в allowlist сервиса 2.",
       "type": "string",
       "minLength": 1,
       "maxLength": 128,
       "pattern": "^[A-Za-z0-9_.-]+$"
     },
     "toolsCallParams": {
+      "description": "Дополнительные правила params для tools/call: обязательно name, arguments необязателен. Применяются поверх общего определения params.",
       "type": "object",
       "maxProperties": 16,
       "propertyNames": { "$ref": "#/definitions/keyName" },
       "required": ["name"],
       "properties": {
-        "name": { "$ref": "#/definitions/toolName" },
+        "name": {
+          "description": "Имя вызываемой тулы. Правила — в toolName.",
+          "$ref": "#/definitions/toolName"
+        },
         "arguments": {
+          "description": "Аргументы тулы. Необязателен. Здесь проверяются только тип объекта, число ключей (до 64) и длина имён; состав и значения проверяет отдельная схема тулы, выбранная по Mcp-Name.",
           "type": "object",
           "maxProperties": 64,
           "propertyNames": { "$ref": "#/definitions/keyName" }
