@@ -1,0 +1,1037 @@
+{
+  "jsonrpc": "2.0",
+  "id": 18,
+  "result": {
+    "resultType": "complete",
+    "content": [
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      },
+      {
+        "type": "text",
+        "text": "В Варшаве +12 °C"
+      }
+    ]
+  }
+}

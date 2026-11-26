@@ -16,6 +16,7 @@
 - [Заголовки запроса и ответа](07-zagolovki.md)
 - [Общая схема SOWA на discover и tools/call](08-sowa-schema.md)
 - [Схема SOWA v2: только общие поля, мягкая проверка](schema_v2/README.md)
+- [Схема SOWA v3: security-режим, явные границы у каждого поля](schema_v3/README.md)
 
 ## Диаграммы
 
