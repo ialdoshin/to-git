@@ -70,7 +70,6 @@
       "propertyNames": { "$ref": "#/definitions/keyName" },
       "required": [
         "io.modelcontextprotocol/protocolVersion",
-        "io.modelcontextprotocol/clientInfo",
         "io.modelcontextprotocol/clientCapabilities"
       ],
       "properties": {

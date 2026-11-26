@@ -2,7 +2,7 @@
 
 [Оглавление](../README.md) · [Строгий вариант](../08-sowa-schema.md) · [Мягкий вариант v2](../schema_v2/README.md)
 
-Две схемы draft-07 на разрешённые вызовы `server/discover` и `tools/call`. Набор обязательных полей тот же, что в v2. Отличие одно: **у каждого поля, объявленного в схеме, есть явные границы**. Длина строк, диапазон чисел, число элементов массива и число ключей объекта ограничены везде.
+Две схемы draft-07 на разрешённые вызовы `server/discover` и `tools/call`. Набор обязательных полей тот же, что в v2, кроме `clientInfo`: в v3 он необязателен, как в спецификации MCP 2026-07-28. Главное отличие: **у каждого поля, объявленного в схеме, есть явные границы**. Длина строк, диапазон чисел, число элементов массива и число ключей объекта ограничены везде.
 
 - Запрос: [mcp-request.json](mcp-request.json)
 - Ответ: [mcp-response.json](mcp-response.json)
@@ -40,7 +40,7 @@
 | `params` | До 16 ключей |
 | `params._meta` | До 32 ключей |
 | `_meta["io.modelcontextprotocol/protocolVersion"]` | Ровно 10 символов, формат `ГГГГ-ММ-ДД` |
-| `_meta["io.modelcontextprotocol/clientInfo"]` | До 16 ключей. `name` и `title` 1–256, `version` 1–64, `description` до 4096, `websiteUrl` до 2048 |
+| `_meta["io.modelcontextprotocol/clientInfo"]` | Необязателен. Если есть — до 16 ключей, `name` и `version` обязательны. `name` и `title` 1–256, `version` 1–64, `description` до 4096, `websiteUrl` до 2048 |
 | `_meta["io.modelcontextprotocol/clientCapabilities"]` | До 32 ключей |
 | `params.name` (`tools/call`) | 1–128 символов, только `A–Z a–z 0–9 _ . -` |
 | `params.arguments` (`tools/call`) | Необязателен. Если есть — объект до 64 ключей |
