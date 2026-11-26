@@ -40,7 +40,7 @@ H < min(T_idle_2, T_idle_sowa)
 Сервис 1 должен:
 
 1. Отправлять версию `2026-07-28` заголовком и в `_meta` каждого POST.
-2. Передавать `clientInfo` и пустые `clientCapabilities`.
+2. Передавать пустые `clientCapabilities`. `clientInfo` необязателен.
 3. Ставить `Mcp-Method`, а для инструмента ещё и `Mcp-Name`.
 4. Не отправлять `initialize` и не ожидать `MCP-Session-Id`.
 5. Принимать JSON или конечный SSE на том же POST.
