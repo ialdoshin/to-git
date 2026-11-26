@@ -29,6 +29,8 @@ Security-режим, где у каждого объявленного поля 
 | `params._meta["io.modelcontextprotocol/clientInfo"]` | Объект только с `name` и `version` |
 | `params._meta["io.modelcontextprotocol/clientCapabilities"]` | Пустой объект |
 
+> В этой строгой схеме `clientInfo` обязателен. В спецификации MCP 2026-07-28 и в [schema_v3](schema_v3/mcp-request.json) он необязателен: если его передали, проверяются `name` и `version`.
+
 Другие ключи корня и `params` запрещены. В `_meta` обязательные поля проверяются по типу, а неизвестный ключ проходит как есть: схему не нужно менять, когда в протоколе появится новое поле. Если ключ уже описан (`progressToken`, версия, `clientInfo`, `clientCapabilities`), его значение по-прежнему должно совпасть со схемой. У `tools/call` из заранее известных необязательных полей описан только `progressToken`.
 
 `server/discover` содержит в `params` только `_meta`. Полей `name` и `arguments` нет.

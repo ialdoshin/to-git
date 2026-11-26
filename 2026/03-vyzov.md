@@ -108,7 +108,7 @@ Mcp-Name: get_weather
 - `params.name` входит в allowlist;
 - `arguments` соответствуют схеме инструмента;
 - `params.task` отсутствует;
-- в `_meta` обязательны версия, `clientInfo` и пустые `clientCapabilities`; `progressToken` необязателен. Другие ключи `_meta` схема не запрещает.
+- в `_meta` обязательны версия и пустые `clientCapabilities`; `clientInfo` и `progressToken` необязательны. Другие ключи `_meta` схема не запрещает.
 
 ### JSON-ответ
 

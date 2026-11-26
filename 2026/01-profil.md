@@ -22,7 +22,7 @@
 - нет `initialize` и `notifications/initialized`;
 - нет `MCP-Session-Id`;
 - нет `GET /mcp`, `DELETE /mcp` и `Last-Event-ID`;
-- версия, `clientInfo` и `clientCapabilities` передаются в каждом запросе;
+- версия и `clientCapabilities` передаются в каждом запросе, `clientInfo` можно добавить, но он необязателен;
 - заголовки `Mcp-Method` и `Mcp-Name` обязательны для вызова инструмента;
 - ответ содержит `resultType`;
 - оборванный SSE нельзя восстановить: результат становится `MCP_RESULT_UNKNOWN`.
